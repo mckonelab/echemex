@@ -2,7 +2,7 @@
 Scripts for processing experimental electrochemistry data
 
 ## Overview
-This repository contains scripts that convert raw .DTA files from the experimental electrochemistry Gamry Framework software into numpy arrays for manipulation in Python.
+This repository contains scripts that convert raw .DTA files from the experimental electrochemistry Gamry Framework software into `numpy` arrays for manipulation in Python.
 Currently, only cyclic voltammetry experiments can be converted, but chronoamperometry, chronopotentiometry, electrochemical impedance spectroscopy, linear sweep voltammetry, and other experimental techniques will shortly be included. 
 Recommendations and requests for additional functionality are welcome and appreciated.
 
@@ -17,7 +17,7 @@ import echemex
 ```
 
 Relevant experimental files can be pulled in via the appropriate script.
-For example, `readcv` is used for reading cycliv voltammetry (CV) data files.
+For example, `readcv` is used for reading cyclic voltammetry (CV) data files.
 The filepath to the data, cycle number, reference electrode potential, and electrode surface area are all needed as inputs to properly scale and interpret the data.
 Outputs are the potential (referenced to the supplied potential), the current density in mA/cm<sup>2</sup>, the scan rate, and the number of cycles. 
 

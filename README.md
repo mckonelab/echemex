@@ -24,9 +24,23 @@ Outputs are the potential (referenced to the supplied potential), the current de
 ```python
 file = '/path/to/data.DTA'
 cycle = -1 # desired cycle number for plotting, -1 gives all
-E_ref = 0 # potential of reference electrode in V
+E_ref = 0 # potential of reference electrode in V, if 0, left to experimental reference
 area = 1 # area in cm^2
 V, I, scan_rate, n_cycles = echemex.readcv(file, cycle, E_ref, area)
 ```
 
 After running and populating the `V` and `I` variables, visualization packages such as `matplotlib` and `seaborn` can be used to plot the data.
+Below is an example code snippet using `matplotlib`.
+
+```python
+import matplotlib.pyplot as plt
+```
+
+```python
+plt.figure()
+plt.plot(V,I,label='The Data')
+plt.axhline(y=0)
+plt.xlabel('V vs. Ref')
+plt.ylabel('j [mA/cm$^2$]')
+plt.legend()
+```

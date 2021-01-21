@@ -95,9 +95,17 @@ def readeis(FILE, E_ref):
         imag = -np.array(imag)
         delt = -np.array(delt)*np.pi/180
         volt = np.array(volt)-E_ref
-        
-
+       
     return time, freq, real, imag, delt, volt
+
+def randcirc(w,sigma,Rct,Ro,Cd):
+    # used for fitting EIS data
+    # scipy.optimize.curvefit can match this function to the raw data
+    # given starting guesses sigma, Rct, Ro, and Cd
+    
+    Zf  = Rct + (sigma/np.sqrt(w))
+    Zre = Ro + Zf/(1+(Zf**2)*(w**2)*(Cd**2))
+    return Zre
 
 def readca(FILE, E_ref, area):
     

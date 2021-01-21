@@ -44,4 +44,4 @@ plt.xlabel('V vs. Ref')
 plt.ylabel('j [mA/cm$^2$]')
 plt.legend()
 ```
-Units are output as follows: Volts in V vs. Ref, current in mA, current density in mA/cm<sup>2</sup>.
+Units are output as follows: Volts in V vs. Ref, current in mA, current density in mA/cm<sup>2</sup>, and time in seconds.

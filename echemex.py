@@ -40,7 +40,6 @@ def readcv(FILE, cycle, E_ref, area):
                     _ = f.readline()
                     _ = f.readline()
                     counter += 1
-                    print(counter)
 
         f.close()
         V = np.array(V)-E_ref

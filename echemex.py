@@ -19,11 +19,11 @@ def readcv(FILE, cycle, E_ref, area):
             if check == 0:
                 if len(data) == 0:
                     _ = 0
-                if data[0] =="SCANRATE":
+                elif data[0] =="SCANRATE":
                     scanrate = data[2]
-                if data[0] == "CYCLES":
+                elif data[0] == "CYCLES":
                     numcyc = data[2]
-                if data[0] == "CURVE1":
+                elif data[0] == "CURVE1":
                     _ = f.readline()
                     _ = f.readline()
                     check = 1

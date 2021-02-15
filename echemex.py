@@ -17,6 +17,8 @@ def readcv(FILE, cycle, E_ref, area):
         for x in f:
             data = x.split()
             if check == 0:
+                if len(data) == 0:
+                    _ = 0
                 if data[0] =="SCANRATE":
                     scanrate = data[2]
                 if data[0] == "CYCLES":

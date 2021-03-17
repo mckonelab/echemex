@@ -46,7 +46,12 @@ def readcv(FILE, cycle, E_ref, area):
         f.close()
         V = np.array(V)-E_ref
         I = np.array(I)*1000/area
-                
+        
+        if area == 1:
+            print("Current is not normalized, units are mA")
+        elif area != 1:
+            print("Current is normalized to area, units are mA/cm^2")
+        
         scanrate = format(float(np.array(scanrate)), '.0f')
     return V, I, scanrate, numcyc
 
@@ -141,6 +146,11 @@ def readca(FILE, E_ref, area):
         potential = np.array(potential)-E_ref
         current = np.array(current)*1000/area        
         
+        if area == 1:
+            print("Current is not normalized, units are mA")
+        elif area != 1:
+            print("Current is normalized to area, units are mA/cm^2")
+            
     return time, potential, current
 
 def readcp(FILE, E_ref):

@@ -6,9 +6,11 @@ This repository contains scripts that convert raw .DTA files from the experiment
 Recommendations and requests for additional functionality are welcome and appreciated.
 
 ## Installation
+Running the following in a terminal should install directly from github.
 ```console
 pip3 install git+https://github.com/miuev/echemex@main
 ```
+Another option is to clone the remote repository locally, change to that directory, and then run `pip install .`.
 
 ## Usage
 The scripts are meant to facilitate data analysis in a digital laboratory notebook.

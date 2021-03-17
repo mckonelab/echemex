@@ -52,6 +52,10 @@ def readcv(FILE, cycle, E_ref, area, quiet=False):
             print("Current is not normalized, units are mA")
         elif area != 1:
             print("Current is normalized to area, units are mA/cm^2")
+        if E_ref == 0:
+            print("Potential is not shifted, units are V vs. your experimental reference")
+        elif E_ref != 0:
+            print("Potential is shifted, units are V vs. your adjusted reference")
         
         scanrate = format(float(np.array(scanrate)), '.0f')
     return V, I, scanrate, numcyc
@@ -103,7 +107,13 @@ def readeis(FILE, E_ref):
         imag = -np.array(imag)
         delt = -np.array(delt)*np.pi/180
         volt = np.array(volt)-E_ref
-       
+    
+    if not quiet:
+        if E_ref == 0:
+            print("Potential is not shifted, units are V vs. your experimental reference")
+        elif E_ref != 0:
+            print("Potential is shifted, units are V vs. your adjusted reference")
+    
     return time, freq, real, imag, delt, volt
 
 def randcirc(w,sigma,Rct,Ro,Cd):
@@ -152,7 +162,11 @@ def readca(FILE, E_ref, area, quiet=False):
             print("Current is not normalized, units are mA")
         elif area != 1:
             print("Current is normalized to area, units are mA/cm^2")
-            
+        if E_ref == 0:
+            print("Potential is not shifted, units are V vs. your experimental reference")
+        elif E_ref != 0:
+            print("Potential is shifted, units are V vs. your adjusted reference")        
+
     return time, potential, current
 
 def readcp(FILE, E_ref, quiet=False):
@@ -186,5 +200,9 @@ def readcp(FILE, E_ref, quiet=False):
     
     if not quiet:
         print("Current is not normalized, units are mA")
-        
+        if E_ref == 0:
+            print("Potential is not shifted, units are V vs. your experimental reference")
+        elif E_ref != 0:
+            print("Potential is shifted, units are V vs. your adjusted reference")
+    
     return t, V, I

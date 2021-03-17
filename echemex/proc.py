@@ -1,6 +1,6 @@
 import numpy as np
 
-def readcv(FILE, cycle, E_ref, area):
+def readcv(FILE, cycle, E_ref, area, quiet=False):
     
     if cycle == -1:
         full = 1
@@ -47,6 +47,7 @@ def readcv(FILE, cycle, E_ref, area):
         V = np.array(V)-E_ref
         I = np.array(I)*1000/area
         
+    if not quiet:
         if area == 1:
             print("Current is not normalized, units are mA")
         elif area != 1:
@@ -114,7 +115,7 @@ def randcirc(w,sigma,Rct,Ro,Cd):
     Zre = Ro + Zf/(1+(Zf**2)*(w**2)*(Cd**2))
     return Zre
 
-def readca(FILE, E_ref, area):
+def readca(FILE, E_ref, area, quiet=False):
     
     time = []
     potential = []
@@ -146,6 +147,7 @@ def readca(FILE, E_ref, area):
         potential = np.array(potential)-E_ref
         current = np.array(current)*1000/area        
         
+    if not quiet:
         if area == 1:
             print("Current is not normalized, units are mA")
         elif area != 1:
@@ -153,7 +155,7 @@ def readca(FILE, E_ref, area):
             
     return time, potential, current
 
-def readcp(FILE, E_ref):
+def readcp(FILE, E_ref, quiet=False):
     
     with open(FILE, "r") as f:
         for s in range(62):
@@ -181,5 +183,8 @@ def readcp(FILE, E_ref):
         V = np.array(V)-E_ref
         I = np.array(I)*10**3
         t = np.array(t)
-
+    
+    if not quiet:
+        print("Current is not normalized, units are mA")
+        
     return t, V, I

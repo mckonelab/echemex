@@ -5,14 +5,19 @@ Scripts for processing experimental electrochemistry data
 This repository contains scripts that convert raw .DTA files from the experimental electrochemistry Gamry Framework software into `numpy` arrays for manipulation in Python.
 Recommendations and requests for additional functionality are welcome and appreciated.
 
+## Installation
+```console
+pip3 install git+https://github.com/miuev/echemex@main
+```
+
 ## Usage
-The script can be imported and run in most any Python-aware environment.
+The scripts are meant to facilitate data analysis in a digital laboratory notebook.
 A Jupyter notebook, for example, is a well-suited way to use this package.
 This approach allows for flexibility in tuning figure outputs and allows for additional manipulations on top of the base package.
-Once `echemex` is installed in an appropriate location in PYTHONPATH, it can be imported as normal.
+Once `echemex` is installed, the tools can be imported with `proc.py`.
 
 ```python
-import echemex
+from echemex import proc
 ```
 
 Relevant experimental files can be pulled in via the appropriate script.
@@ -25,7 +30,7 @@ file = '/path/to/data.DTA'
 cycle = -1 # desired cycle number for plotting, -1 gives all
 E_ref = 0 # potential of reference electrode in V, if 0, left to experimental reference
 area = 1 # area in cm^2
-V, I, scan_rate, n_cycles = echemex.readcv(file, cycle, E_ref, area)
+V, I, scan_rate, n_cycles = proc.readcv(file, cycle, E_ref, area)
 ```
 
 After running and populating the `V` and `I` variables, visualization packages such as `matplotlib` and `seaborn` can be used to plot the data.

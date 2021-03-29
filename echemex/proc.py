@@ -1,6 +1,13 @@
 import numpy as np
 
-def readcv(FILE, cycle, E_ref, area, quiet=False):
+def readcv(FILE, cycle = -1, E_ref = 0, area = 0, quiet = False):
+    
+    # FILE    - path to .DTA cyclic voltammetry data file
+    # cycle   - cycle number to return
+    #           return all if -1
+    # E_ref   - reference potential shift, default no shift
+    # area    - electrode area, default no normalization
+    # quiet   - suppress normalization notifications in output if True
     
     if cycle == -1:
         full = 1
@@ -60,11 +67,13 @@ def readcv(FILE, cycle, E_ref, area, quiet=False):
         scanrate = format(float(np.array(scanrate)), '.0f')
     return V, I, scanrate, numcyc
 
-def readeis(FILE, E_ref):
-    # FILE - filepath to data
-    # E_ref - reference electrode potential
+def readeis(FILE, E_ref = 0):
+    
+    # FILE    - path to .DTA EIS data file
+    # E_ref   - reference potential shift, default no shift
     # Note: original .DTA files may not be encoded in a way that is compatible with this function
     #       duplicating the file into another blank .txt file and renaming .DTA fixes this issue
+    
     check = 0
     with open(FILE, "r") as f:
         for s in range(10):
@@ -117,6 +126,7 @@ def readeis(FILE, E_ref):
     return time, freq, real, imag, delt, volt
 
 def randcirc(w,sigma,Rct,Ro,Cd):
+    
     # used for fitting EIS data
     # scipy.optimize.curvefit can match this function to the raw data
     # given starting guesses sigma, Rct, Ro, and Cd
@@ -125,7 +135,12 @@ def randcirc(w,sigma,Rct,Ro,Cd):
     Zre = Ro + Zf/(1+(Zf**2)*(w**2)*(Cd**2))
     return Zre
 
-def readca(FILE, E_ref, area, quiet=False):
+def readca(FILE, E_ref = 0, area = 0, quiet = False):
+    
+    # FILE    - path to .DTA cyclic voltammetry file
+    # E_ref   - reference potential shift, default no shift
+    # area    - electrode area, default no normalization
+    # quiet   - suppress normalization notifications in output if True
     
     time = []
     potential = []
@@ -169,7 +184,11 @@ def readca(FILE, E_ref, area, quiet=False):
 
     return time, potential, current
 
-def readcp(FILE, E_ref, quiet=False):
+def readcp(FILE, E_ref = 0, quiet = False):
+    
+    # FILE    - path to .DTA chronopotentiometry data file
+    # E_ref   - reference potential shift, default no shift
+    # quiet   - suppress normalization notifications in output if True
     
     with open(FILE, "r") as f:
         for s in range(62):

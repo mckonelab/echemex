@@ -30,7 +30,7 @@ def readcv(FILE, cycle = -1, E_ref = 0, area = 1, quiet = False):
                     scanrate = data[2]
                 elif data[0] == "CYCLES":
                     numcyc = data[2]
-                elif data[0] == "CURVE1":
+                elif data[0] == "CURVE1" or data[0] == "CURVE":
                     _ = f.readline()
                     _ = f.readline()
                     check = 1

@@ -1,6 +1,6 @@
 import numpy as np
 
-def readcv(FILE, cycle = -1, E_ref = 0, area = 0, quiet = False):
+def readcv(FILE, cycle = -1, E_ref = 0, area = 1, quiet = False):
     
     # FILE    - path to .DTA cyclic voltammetry data file
     # cycle   - cycle number to return
@@ -135,7 +135,7 @@ def randcirc(w,sigma,Rct,Ro,Cd):
     Zre = Ro + Zf/(1+(Zf**2)*(w**2)*(Cd**2))
     return Zre
 
-def readca(FILE, E_ref = 0, area = 0, quiet = False):
+def readca(FILE, E_ref = 0, area = 1, quiet = False):
     
     # FILE    - path to .DTA cyclic voltammetry file
     # E_ref   - reference potential shift, default no shift

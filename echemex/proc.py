@@ -225,3 +225,39 @@ def readcp(FILE, E_ref = 0, quiet = False):
             print("Potential is shifted, units are V vs. your adjusted reference")
     
     return t, V, I
+
+def getocp(FILE):
+    
+    # FILE    - path to .DTA cyclic voltammetry data file
+    # quiet   - suppress normalization notifications in output if True
+    
+    with open(FILE, "r") as f:
+        t = []
+        V = []
+        check = 0
+        counter = 0
+
+        for x in f:
+            data = x.split()
+            if check == 0:
+                if len(data) == 0:
+                    _ = 0
+                elif data[0] == "CURVE1" or data[0] == "CURVE":
+                    _ = f.readline()
+                    _ = f.readline()
+                    check = 1
+                else:
+                    _ = 0
+
+            elif check == 1:
+                float(data[0])
+                t.append(float(data[1]))
+                V.append(float(data[2]))
+                    
+        f.close()
+        
+        t = np.array(t)
+        V = np.array(V)
+        
+        average = np.mean(V[-20:])
+    return t, V, average

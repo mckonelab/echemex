@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="echemex",
-    version="0.0.1",
+    version="0.0.2",
     author="Evan Miu",
     author_email="evm24@pitt.edu",
     description="Scripts for experimental electrochemistry data analysis in digital lab notebooks",

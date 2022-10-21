@@ -1,0 +1,10 @@
+LICENSE
+README.md
+setup.py
+echemex/__init__.py
+echemex/proc.py
+echemex.egg-info/PKG-INFO
+echemex.egg-info/SOURCES.txt
+echemex.egg-info/dependency_links.txt
+echemex.egg-info/requires.txt
+echemex.egg-info/top_level.txt

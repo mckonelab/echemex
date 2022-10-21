@@ -67,6 +67,121 @@ def readcv(FILE, cycle = -1, E_ref = 0, area = 1, quiet = False):
         scanrate = format(float(np.array(scanrate)), '.0f')
     return V, I, scanrate, numcyc
 
+def readlsv(FILE, E_ref = 0, area = 1, quiet = False):
+
+    # FILE    - path to .DTA cyclic voltammetry data file
+    # E_ref   - reference potential shift, default no shift
+    # area    - electrode area, default no normalization
+    # quiet   - suppress normalization notifications in output if True
+
+    with open(FILE, "r") as f:
+        V = []
+        I = []
+        check = 0
+        counter = 0
+
+        for x in f:
+            data = x.split()
+            if check == 0:
+                if len(data) == 0:
+                    _ = 0
+                elif data[0] =="SCANRATE":
+                    scanrate = data[2]
+                elif data[0] == "CURVE1" or data[0] == "CURVE":
+                    _ = f.readline()
+                    _ = f.readline()
+                    check = 1
+                else:
+                    _ = 0
+
+            elif check == 1:
+                try:
+                    float(data[0])
+                    V.append(float(data[2]))
+                    I.append(float(data[3]))
+                except:
+                    _ = f.readline()
+                    _ = f.readline()
+                    counter += 1
+
+        f.close()
+        V = np.array(V)-E_ref
+        I = np.array(I)*1000/area
+
+        if not quiet:
+            if area == 1:
+                print("Current is not normalized, units are mA")
+            elif area != 1:
+                print("Current is normalized to area, units are mA/cm^2")
+            if E_ref == 0:
+                print("Potential is not shifted, units are V vs. your experimental reference")
+            elif E_ref != 0:
+                print("Potential is shifted, units are V vs. your adjusted reference")
+
+        scanrate = format(float(np.array(scanrate)), '.0f')
+    return V, I, scanrate
+
+def readswv(FILE, E_ref = 0, area = 1, quiet = False):
+    
+    # FILE    - path to .DTA cyclic voltammetry data file
+    # E_ref   - reference potential shift, default no shift
+    # area    - electrode area, default no normalization
+    # quiet   - suppress normalization notifications in output if True
+
+    with open(FILE, "r") as f:
+        V_fwd = []
+        V_rev = []
+        V_step = []
+        I_fwd = []
+        I_rev = []
+        I_diff = []
+        check = 0
+
+        for x in f:
+            data = x.split()
+            if check == 0:
+                if len(data) == 0:
+                    _ = 0
+                elif data[0] == "CURVE1" or data[0] == "CURVE":
+                    _ = f.readline()
+                    _ = f.readline()
+                    check = 1
+                else:
+                    _ = 0
+
+            elif check == 1:
+                try:
+                    float(data[0])
+                    V_fwd.append(float(data[2]))
+                    V_rev.append(float(data[3]))
+                    V_step.append(float(data[4]))
+                    I_fwd.append(float(data[5]))
+                    I_rev.append(float(data[6]))
+                    I_diff.append(float(data[7]))
+                except:
+                    _ = f.readline()
+                    _ = f.readline()
+
+        f.close()
+        V_fwd = np.array(V_fwd)-E_ref
+        V_rev = np.array(V_rev)-E_ref
+        V_step = np.array(V_step)-E_ref
+        I_fwd = np.array(I_fwd)*1000/area
+        I_rev = np.array(I_rev)*1000/area
+        I_diff = np.array(I_diff)*1000/area
+
+        if not quiet:
+            if area == 1:
+                print("Current is not normalized, units are mA")
+            elif area != 1:
+                print("Current is normalized to area, units are mA/cm^2")
+            if E_ref == 0:
+                print("Potential is not shifted, units are V vs. your experimental reference")
+            elif E_ref != 0:
+                print("Potential is shifted, units are V vs. your adjusted reference")
+
+    return V_fwd, V_rev, V_step, I_fwd, I_rev, I_diff
+
 def readeis(FILE, E_ref = 0):
     
     # FILE    - path to .DTA EIS data file
@@ -229,7 +344,6 @@ def readcp(FILE, E_ref = 0, quiet = False):
 def getocp(FILE):
     
     # FILE    - path to .DTA cyclic voltammetry data file
-    # quiet   - suppress normalization notifications in output if True
     
     with open(FILE, "r") as f:
         t = []
@@ -261,3 +375,55 @@ def getocp(FILE):
         
         average = np.mean(V[-20:])
     return t, V, average
+
+def readgitt(FILE, E_ref = 0, area = 1, quiet = False):
+    
+    # FILE    - path to .DTA cyclic voltammetry data file
+    # E_ref   - reference potential shift, default no shift
+    # area    - electrode area, default no normalization
+    # quiet   - suppress normalization notifications in output if True ):
+   
+    with open(FILE, "r") as f:
+        t = []
+        V = []
+        I = []
+        cycle = []
+        check = 0
+        
+        for x in f:
+            data = x.split()
+            if check == 0:
+                if len(data) == 0:
+                    _ = 0
+                elif data[0] == "CURVE1" or data[0] == "CURVE":
+                    _ = f.readline()
+                    _ = f.readline()
+                    check = 1
+                else:
+                    _ = 0
+
+            elif check == 1:
+                float(data[0])
+                t.append(float(data[1]))
+                V.append(float(data[2]))
+                I.append(float(data[3]))
+                cycle.append(float(data[-1]))
+                    
+        f.close()
+        
+        t = np.array(t)
+        V = np.array(V)
+        I = np.array(I)
+        cycle = np.array(cycle)
+        
+        if not quiet:
+            if area == 1:
+                print("Current is not normalized, units are mA")
+            elif area != 1:
+                print("Current is normalized, units are mA/cm2")
+            if E_ref == 0:
+                print("Potential is not shifted, units are V vs. your experimental reference")
+            elif E_ref != 0:
+                print("Potential is shifted, units are V vs. your adjusted reference")
+
+    return t, V, I, cycle
